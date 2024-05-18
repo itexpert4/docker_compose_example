@@ -1,0 +1,20 @@
+version: "3"
+services:
+ node_js_demo_app:
+  restart: "always"
+  image: ghcr.io/benc-uk/nodejs-demoapp:latest
+  ports:
+    - 3000:3000
+ 
+ nginx:
+  depends_on:
+   - node_js_demo_app
+  restart: "always"
+  image: nginx:alpine
+  volumes:
+   - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+  ports:
+   - 8080:80
+  links:
+   - node_js_demo_app
+   
